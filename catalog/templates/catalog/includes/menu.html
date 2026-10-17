@@ -1,0 +1,25 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">Магазин</a>
+        <ul class="navbar-nav ms-auto align-items-center">
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Главная</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'contacts' %}">Контакты</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'blog:blogpost_list' %}">Блог</a></li>
+
+            {% if user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'product_create' %}">Добавить товар</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'users:profile' %}">Профиль ({{ user.email }})</a></li>
+                <li class="nav-item">
+                    <!-- Форма для выхода (Django требует POST для выхода) -->
+                    <form method="post" action="{% url 'users:logout' %}" class="d-inline">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-link nav-link" style="text-decoration: none;">Выйти</button>
+                    </form>
+                </li>
+            {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'users:login' %}">Войти</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Регистрация</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</nav>
